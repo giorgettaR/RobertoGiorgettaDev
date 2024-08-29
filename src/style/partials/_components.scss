@@ -1,1 +1,23 @@
 @use './variables' as *;
+
+// ProjectPreview
+
+.projectPreview {
+    position: relative;
+    overflow: hidden;
+
+    .imgBox {
+        position: absolute;
+        width: 250px;
+        height: 150px;
+        padding: 1em;
+        bottom: 0;
+        right: 0;
+
+        img {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}

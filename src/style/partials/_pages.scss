@@ -1,0 +1,14 @@
+@use './variables' as *;
+
+// Projects
+.projectsWrap {
+    height: 80vh;
+    width: 80vw;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+}

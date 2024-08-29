@@ -2,4 +2,5 @@
 @use './partials/variables';
 @use './partials/mixins';
 @use './partials/components';
-@use './partials/layout';
+@use './partials/pages';
+@import "bootstrap/scss/bootstrap";
