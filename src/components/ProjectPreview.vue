@@ -1,10 +1,12 @@
 <template>
-  <div :class="project.title" class="projectPreview d-flex w-50 h-50">
-    <h1  @click="fade(project.title)">{{ project.title }}</h1>
+  <div :class="project.title" v-on:mouseover="hover(project.title)" v-on:mouseleave="leave(project.title)" class="projectPreview d-flex">
+    <RouterLink :to="{ name: 'project', params: { slug: project.title }}">Dettagli</RouterLink>
+    <h1>{{ project.title }}</h1>
     <div class="imgBox">
         <img :src="getImgPath(project.imagePreview)" alt="">
     </div>
     <p class="link" @click="openGitRepository()">Git Repository</p>
+    <!-- <button @click="leave(project.title)" v-if="this.detailsOn">indietro</button> -->
 </div>
 </template>
 
@@ -18,15 +20,16 @@ export default {
       project: {
         type: Object,
         required: true
-      },
-      fullyLoaded: {
-        type: Boolean,
+      },     
+      position: {
+        type: Number,
         required: true
-      }
-    },
+      },
+    },      
+    
     data() {
         return {
-          
+          detailsOn: false
         }
     },
     methods:{
@@ -37,27 +40,42 @@ export default {
                 let imgPath = '/img/' + imgFile
                 return imgPath;
         },
-        fade(projecTitle){
-          if (this.fullyLoaded){
+        hover(projecTitle){
+          if (!this.detailsOn){
             gsap.to(`.${projecTitle}`, {
-              x: 1500,
-              rotation: 400,
-              duration: 1,
+              width: '35%',
+              height: '105%',
+              zIndex: 5,
+              duration: 0.6,
             })
-            gsap.to(`.${projecTitle}`, {
-              x: 0,
-              height: '500px',
-              rotate: 0,
-              delay: 1,
-              duration: 1,
-            })
-            // gsap.to('.projectsWrap', {
-            //   duration: 1,
-            //   autoAlpha: 0,
-            // })
           }
-        }
+        },
+        leave(projecTitle){
+          if (!this.detailsOn) {
+            console.log(this.detailsOn)
+            gsap.to(`.${projecTitle}`, {
+              height: '100%',
+              width: '30%',
+              zIndex:  this.position,
+              duration: 0.6,
+            })
+          }
+        },
+        openDetails() {
+          this.detailsOn = true
+          gsap.to(`.projectPreview`, {
+            autoAlpha: 0,
+            duration: 0.1,
+          })
+        },
     },
+    mounted() {
+      let slide = gsap.to(`.${this.slideIndex}`, {
+                autoAlpha: 1,
+                duration: 3,
+                
+            })
+    }
 
     
 }

@@ -1,14 +1,11 @@
 <template>
-    <RouterLink :to="{ name: 'home'}">Home</RouterLink>
-    <RouterLink :to="{ name: 'projects'}" >{{ data.language == 'Italian' ? 'Progetti' : 'Projects'}}</RouterLink>
-    <RouterLink :to="{ name: 'mystory'}">{{ data.language == 'Italian' ? 'La Mia Storia' : 'Mystory'}}</RouterLink>
-    <RouterLink :to="{ name: 'contacts'}">{{ data.language == 'Italian' ? 'Contatti' : 'Contacts'}}</RouterLink>
-    <button @click="data.languageToggle()"> {{ data.languageMessage }} </button>
+  <Navbar />
     <h1>Home</h1>
 </template>
 
 
 <script>
+import Navbar from '../components/Navbar.vue';
 import { data } from '../data.js';
 
 export default {
@@ -17,6 +14,9 @@ export default {
     return {
       data
     }
+  },        
+  components: {
+    Navbar
   },
   props: {
 
