@@ -1,15 +1,18 @@
 <template>
     <Navbar />
-    <div class="projectsWrap d-flex flex-nowrap">
-        <ProjectPreview v-for="project in visibleProjects()" 
-        :project="project" 
-        :class="this.previewPositions[visibleProjects().indexOf(project)]"
-        :position="visibleProjects().indexOf(project)" 
-        />
+        <div class="container">
+            <div class="row">
+                <div class="projectsWrap d-flex">
+                    <ProjectPreview v-for="project in visibleProjects()" 
+                    :project="project" 
+                    :position="visibleProjects().indexOf(project)" 
+                    />
+            </div>
+        </div>
     </div>
     <h1>Projects</h1>
-    <button @click="leftSlider()" :disabled="disableSliderLeft" ><</button>
-    <button @click="rightSlider()" :disabled="disableSliderRight" >></button>
+    <button class="slider" @click="leftSlider()" :disabled="disableSliderLeft" ><</button>
+    <button class="slider" @click="rightSlider()" :disabled="disableSliderRight" >></button>
 </template>
 
 <script>
@@ -24,8 +27,10 @@
             return {
                 data,
                 projects: projects.projects,
-                visibleProjectsAmount: 5,
-                previewPositions: ['left', 'centerLeft', 'center', 'centerRight', 'right'],
+                visibleProjectsAmount: 3,
+                currentPage: 0,
+                pages: Number,
+                animationActive: false,
                 visibleProjectsPositionI: 0,
             }
         },
@@ -36,31 +41,75 @@
         methods: {
             visibleProjects(){
                 let visible = []
-                for (let i = this.visibleProjectsPositionI; i < (this.visibleProjectsPositionI + this.visibleProjectsAmount); i++){
-                    visible.push(this.projects[i])
+                for (let i = this.currentPage*this.visibleProjectsAmount; i < (this.currentPage*this.visibleProjectsAmount + this.visibleProjectsAmount); i++){
+                    if (i < this.projects.length) {
+                        visible.push(this.projects[i])
+                    }
                 }   
                 return visible
             },              
             leftSlider(){
-                if (this.visibleProjectsPositionI > 0) {
-                this.visibleProjectsPositionI--
-                console.log(this.projects.length)
-                }
+                gsap.to(`.projectPreview`, {
+                    autoAlpha: 0,
+                    x: 150,
+                    duration: 0.4,
+                    stagger: 0.1,
+                    onStart: () => {this.animationActive = true},
+                    onComplete: () => { 
+                        this.currentPage--; 
+                        console.log(this.currentPage)
+                    }
+                })
+                gsap.set(`.projectPreview`, {
+                    delay: 0.8,
+                    x:-150
+                }) 
+                gsap.to(`.projectPreview`, {
+                    delay: 0.8,
+                    autoAlpha: 1,
+                    x: 0,
+                    duration: 0.4,
+                    stagger: 0.1,
+                    onComplete: () => { this.animationActive = false }
+                })             
+                console.log(this.currentPage)
             },
             rightSlider(){
-                this.visibleProjectsPositionI++
+                gsap.to(`.projectPreview`, {
+                    autoAlpha: 0,
+                    x: -150,
+                    duration: 0.4,
+                    stagger: -0.1,
+                    onStart: () => {this.animationActive = true},
+                    onComplete: () => { 
+                        this.currentPage++; 
+                        console.log(this.currentPage)
+                    }
+                })
+                gsap.set(`.projectPreview`, {
+                    delay: 0.8,
+                    x:+150
+                }) 
+                gsap.to(`.projectPreview`, {
+                    delay: 0.8,
+                    autoAlpha: 1,
+                    x: 0,
+                    duration: 0.4,
+                    stagger: -0.1,
+                    onComplete: () => { this.animationActive = false }
+                })
             }
         },
         computed: {
             disableSliderLeft() {
-                if (this.visibleProjectsPositionI != 0) {
+                if (this.currentPage != 0 && !this.animationActive)  {
                     return false
                 } else {
                     return true
                 }
                 },
             disableSliderRight() {
-                if (this.visibleProjectsPositionI != (this.projects.length - this.visibleProjectsAmount)) {
+                if (this.currentPage < this.pages && !this.animationActive) {
                     return false
                 } else {
                     return true
@@ -68,6 +117,8 @@
             }
         },
         mounted() {
+            this.pages = Math.floor(this.projects.length / this.visibleProjectsAmount) - 1
+            console.log(this.pages)
             gsap.set('.projectPreview', {
                 autoAlpha: 0,
                 width: 0,
@@ -75,34 +126,8 @@
             gsap.to('.projectPreview', {
                 autoAlpha: 1,
                 duration: 0.3 ,
-                width: '30%',
+                width: '20%',
                 stagger: 0.2,
-            })
-            gsap.to('.left', {
-                duration: 0.3,
-                x:-300,
-                zIndex:0
-            })
-            gsap.to('.centerLeft', {
-                duration: 0.3,
-                x:-150,
-                zIndex:1
-                
-            })
-            gsap.to('.center', {
-                duration: 0.3,
-                zIndex: 2
-            })
-            gsap.to('.centerRight', {
-                duration: 0.3,
-                x:150,
-                zIndex:3
-                
-            })
-            gsap.to('.right', {
-                duration: 0.3,
-                x:300,
-                zIndex:4,
             })
         }
     }

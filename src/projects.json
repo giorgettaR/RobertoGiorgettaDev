@@ -107,6 +107,114 @@
         "JavaScript"
       ],
       "gitRepository": ""
+    },
+    {
+      "id": 7,
+      "imagePreview": "preview_WhatsappLike.jpg",
+      "imageDetails": [
+        "",
+        ""
+      ],
+      "authors": [
+        "Roberto Giorgetta"
+      ],
+      "title": "WhatsappLi1",
+      "description": "Sviluppo di un’app di messaggisica (stile Whatsapp) con JavaScript e il framework Vue JS implementando la compatibilità sui diversi dispositivi, la ricerca dei contatti, l’invio di messaggi su diverse chat e la risposta automatica del browser.",
+      "technologies": [
+        "CSS",
+        "JavaScript"
+      ],
+      "gitRepository": ""
+    },
+    {
+      "id": 8,
+      "imagePreview": "preview_WhatsappLike.jpg",
+      "imageDetails": [
+        "",
+        ""
+      ],
+      "authors": [
+        "Roberto Giorgetta"
+      ],
+      "title": "NetflixLnfike",
+      "description": "Sviluppo di un’app di messaggisica (stile Whatsapp) con JavaScript e il framework Vue JS implementando la compatibilità sui diversi dispositivi, la ricerca dei contatti, l’invio di messaggi su diverse chat e la risposta automatica del browser.",
+      "technologies": [
+        "CSS",
+        "JavaScript"
+      ],
+      "gitRepository": ""
+    },
+    {
+      "id": 9,
+      "imagePreview": "preview_WhatsappLike.jpg",
+      "imageDetails": [
+        "",
+        ""
+      ],
+      "authors": [
+        "Roberto Giorgetta"
+      ],
+      "title": "ZalandoLirthke",
+      "description": "Sviluppo di un’app di messaggisica (stile Whatsapp) con JavaScript e il framework Vue JS implementando la compatibilità sui diversi dispositivi, la ricerca dei contatti, l’invio di messaggi su diverse chat e la risposta automatica del browser.",
+      "technologies": [
+        "CSS",
+        "JavaScript"
+      ],
+      "gitRepository": ""
+    },
+    {
+      "id": 10,
+      "imagePreview": "preview_WhatsappLike.jpg",
+      "imageDetails": [
+        "",
+        ""
+      ],
+      "authors": [
+        "Roberto Giorgetta"
+      ],
+      "title": "DiscordrtbvhLike",
+      "description": "Sviluppo di un’app di messaggisica (stile Whatsapp) con JavaScript e il framework Vue JS implementando la compatibilità sui diversi dispositivi, la ricerca dei contatti, l’invio di messaggi su diverse chat e la risposta automatica del browser.",
+      "technologies": [
+        "CSS",
+        "JavaScript"
+      ],
+      "gitRepository": ""
+    },
+    {
+      "id": 11,
+      "imagePreview": "preview_WhatsappLike.jpg",
+      "imageDetails": [
+        "",
+        ""
+      ],
+      "authors": [
+        "Roberto Giorgetta"
+      ],
+      "title": "Mastermrectdind",
+      "description": "Sviluppo di un’app di messaggisica (stile Whatsapp) con JavaScript e il framework Vue JS implementando la compatibilità sui diversi dispositivi, la ricerca dei contatti, l’invio di messaggi su diverse chat e la risposta automatica del browser.",
+      "technologies": [
+        "CSS",
+        "JavaScript"
+      ],
+      "gitRepository": ""
+    },
+    {
+      "id": 12,
+      "imagePreview": "preview_WhatsappLike.jpg",
+      "imageDetails": [
+        "",
+        ""
+      ],
+      "authors": [
+        "Roberto Giorgetta"
+      ],
+      "title": "DiscordtgedMike",
+      "description": "Sviluppo di un’app di messaggisica (stile Whatsapp) con JavaScript e il framework Vue JS implementando la compatibilità sui diversi dispositivi, la ricerca dei contatti, l’invio di messaggi su diverse chat e la risposta automatica del browser.",
+      "technologies": [
+        "CSS",
+        "JavaScript"
+      ],
+      "gitRepository": ""
     }
   ]
 }
