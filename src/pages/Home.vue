@@ -1,6 +1,6 @@
 <template>
   <Navbar />
-    <h1>Home</h1>
+  <h1>Home</h1>
 </template>
 
 
@@ -28,7 +28,5 @@ export default {
 </script>
 
 <style lang ="scss">
-  a {
-    margin: 20px;
-  }
+
 </style>

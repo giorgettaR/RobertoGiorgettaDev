@@ -1,18 +1,22 @@
 <template>
     <Navbar />
-        <div class="container">
-            <div class="row">
-                <div class="projectsWrap d-flex">
-                    <ProjectPreview v-for="project in visibleProjects()" 
-                    :project="project" 
-                    :position="visibleProjects().indexOf(project)" 
-                    />
+    <div class="container">
+        <div class="row">
+            <div class="col-12 projectsWrap d-flex align-items-center">
+                <ProjectPreview v-for="project in visibleProjects()" 
+                :project="project" 
+                @toggleDetails="toggleDetails()" 
+                />
+                <div class="projectsNav" v-if="!this.detailsOn">
+                    <button class="slider left" @click="slide(this.currentPage-1)" :disabled="disableSliderLeft" ><</button>
+                    <button @click="slide(0)" :disabled="disableSlider(0)">.</button>
+                    <button v-for="pageNumber in this.pages" @click="slide(pageNumber)" :disabled="disableSlider(pageNumber)">.</button>
+                    <button class="slider right" @click="slide(this.currentPage+1)" :disabled="disableSliderRight" >></button>
+                </div>
             </div>
         </div>
     </div>
-    <h1>Projects</h1>
-    <button class="slider" @click="leftSlider()" :disabled="disableSliderLeft" ><</button>
-    <button class="slider" @click="rightSlider()" :disabled="disableSliderRight" >></button>
+    
 </template>
 
 <script>
@@ -29,9 +33,11 @@
                 projects: projects.projects,
                 visibleProjectsAmount: 3,
                 currentPage: 0,
+                pagesAmount: this.pages + 1,
                 pages: Number,
                 animationActive: false,
                 visibleProjectsPositionI: 0,
+                detailsOn: false,
             }
         },
         components: {
@@ -47,58 +53,63 @@
                     }
                 }   
                 return visible
-            },              
-            leftSlider(){
-                gsap.to(`.projectPreview`, {
-                    autoAlpha: 0,
-                    x: 150,
-                    duration: 0.4,
-                    stagger: 0.1,
-                    onStart: () => {this.animationActive = true},
-                    onComplete: () => { 
-                        this.currentPage--; 
-                        console.log(this.currentPage)
-                    }
-                })
-                gsap.set(`.projectPreview`, {
-                    delay: 0.8,
-                    x:-150
-                }) 
-                gsap.to(`.projectPreview`, {
-                    delay: 0.8,
-                    autoAlpha: 1,
-                    x: 0,
-                    duration: 0.4,
-                    stagger: 0.1,
-                    onComplete: () => { this.animationActive = false }
-                })             
-                console.log(this.currentPage)
             },
-            rightSlider(){
-                gsap.to(`.projectPreview`, {
+            slide(pageNumber){
+                if(this.currentPage < pageNumber){
+                    gsap.to(`.projectPreview`, {
                     autoAlpha: 0,
-                    x: -150,
-                    duration: 0.4,
-                    stagger: -0.1,
+                    x: -250,
+                    height: 0,
+                    duration: 0.3,
                     onStart: () => {this.animationActive = true},
-                    onComplete: () => { 
-                        this.currentPage++; 
-                        console.log(this.currentPage)
-                    }
+                    onComplete: () => {this.currentPage = pageNumber}
                 })
                 gsap.set(`.projectPreview`, {
-                    delay: 0.8,
-                    x:+150
+                    delay: 0.3,
+                    x:+250
                 }) 
                 gsap.to(`.projectPreview`, {
-                    delay: 0.8,
+                    delay: 0.3,
+                    height: 250,
                     autoAlpha: 1,
                     x: 0,
-                    duration: 0.4,
-                    stagger: -0.1,
+                    duration: 0.3,
                     onComplete: () => { this.animationActive = false }
                 })
-            }
+                } else if (this.currentPage > pageNumber) {
+                    gsap.to(`.projectPreview`, {
+                    autoAlpha: 0,
+                    x: +250,
+                    height: 0,
+                    duration: 0.3,
+                    onStart: () => {this.animationActive = true},
+                    onComplete: () => {this.currentPage = pageNumber}
+                })
+                gsap.set(`.projectPreview`, {
+                    delay: 0.3,
+                    x:-250
+                }) 
+                gsap.to(`.projectPreview`, {
+                    delay: 0.3,
+                    height: 250,
+                    autoAlpha: 1,
+                    x: 0,
+                    duration: 0.3,
+                    onComplete: () => { this.animationActive = false }
+                })
+                }
+            },           
+            toggleDetails(){
+                this.detailsOn = !this.detailsOn
+                console.log(this.detailsOn)
+            },
+            disableSlider(pageNumber) {
+                if (this.currentPage != pageNumber)  {
+                    return false
+                } else {
+                    return true
+                }
+                },
         },
         computed: {
             disableSliderLeft() {
@@ -117,16 +128,24 @@
             }
         },
         mounted() {
-            this.pages = Math.floor(this.projects.length / this.visibleProjectsAmount) - 1
+            let pages = this.projects.length / this.visibleProjectsAmount
+            if (Number.isInteger(pages)) {
+                this.pages = Math.floor(pages) - 1
+            } else {
+                this.pages = Math.floor(pages)
+            }
+            console.log(pages)
             console.log(this.pages)
             gsap.set('.projectPreview', {
                 autoAlpha: 0,
+                height: 0,
                 width: 0,
             })            
             gsap.to('.projectPreview', {
                 autoAlpha: 1,
                 duration: 0.3 ,
-                width: '20%',
+                height: 250,
+                width: 250,
                 stagger: 0.2,
             })
         }

@@ -2,11 +2,23 @@
 
 // Projects
 .projectsWrap {
-    // height: 50vh;justify-content-start
-    // width: 50vw;
-    // position: absolute;
-    // top: 50%;
-    // left: 50%;
-    // -ms-transform: translate(-50%, -50%);
-    // transform: translate(-50%, -50%);
+    margin-top: calc((100vh - 350px - 80px - 20px) / 2) !important;
+    padding-bottom: 20px;
+    overflow-x: hidden;
+    overflow-y: visible;
+    height: 350px;
+    position: relative;
+
+    .projectsNav {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        margin-top: 20px;
+        -ms-transform: translate(-50%, 0);
+        transform: translate(-50%, 0);
+
+        * {
+            margin: 0 5px;
+        }
+    }
 }
