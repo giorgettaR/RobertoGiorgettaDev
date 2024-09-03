@@ -1,6 +1,6 @@
 <template>
-    <Navbar />
-    <div class="container">
+    <!-- <Navbar /> -->
+    <div class="container projects">
         <div class="row">
             <div class="col-12 projectsWrap d-flex align-items-center">
                 <ProjectPreview v-for="project in visibleProjects()" 

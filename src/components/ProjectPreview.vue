@@ -58,50 +58,56 @@ export default {
         },
         openDetails(projecTitle) {
           this.detailsOn = true
-          gsap.to(`.projectPreview`, {
+          const tl = gsap.timeline()
+          tl.set(`.projectPreview`, {
             pointerEvents: 'none',
           })    
-          gsap.to(`.projectPreview`, {
+          tl.to(`.projectPreview`, {
             autoAlpha: 0,
             duration: 0.3,
           })          
-          gsap.to(`.projectPreview`, {
+          tl.set(`.projectPreview`, {
             position: 'absolute',
-            delay: 0.3,
           })
-          gsap.to(`.${projecTitle}`, {
+          tl.set(`.projectsWrap`, {
+            height: '500px',
+          })
+          tl.set(`.${projecTitle}`, {
             pointerEvents: 'auto',
+          })  
+          tl.to(`.${projecTitle}`, {
             position: 'static',
             autoAlpha: 1,
             height: '100%',
             width: '100%',
-            delay: 0.5,
             duration: 0.3,
           })
         },
         closeDetails(projectTitle) {
           this.detailsOn = false
-          gsap.to(`.projectPreview`, {
+          const tl = gsap.timeline()
+          tl.set(`.projectPreview`, {
             pointerEvents: 'none',
           })  
-          gsap.to(`.${projectTitle}`, {
+          tl.to(`.${projectTitle}`, {
             autoAlpha: 0,
             duration: 0.3,
           })
-          gsap.set(`.projectPreview`, {
+          tl.set(`.projectPreview`, {
             position: 'static',
             height: 0,
-            delay: 0.3,
           })
-          gsap.to(`.projectPreview`, {
+          tl.to(`.projectPreview`, {
             autoAlpha: 1,
             height: 250,
             width: 250,
-            delay: 0.3,
             duration: 0.3,
           })
-          gsap.set(`.projectPreview`, {
-            delay: 0.5,
+          tl.to(`.projectsWrap`, {
+            height: '350px',
+            duration: 0.3,
+          })
+          tl.set(`.projectPreview`, {
             pointerEvents: 'auto',
           }) 
         },

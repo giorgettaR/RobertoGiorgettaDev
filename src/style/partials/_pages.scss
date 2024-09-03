@@ -1,8 +1,33 @@
 @use './variables' as *;
 
+// home
+.container.home {
+    height: calc(100vh - 80px);
+
+    .row {
+        height: 100%;
+    }
+
+}
+
 // Projects
+
+.container.projects {
+    height: 100vh;
+
+    .row {
+        height: 100%;
+    }
+
+}
+
 .projectsWrap {
-    margin-top: calc((100vh - 350px - 80px - 20px) / 2) !important;
+    top: 50%;
+    margin: 0;
+    position: absolute;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+
     padding-bottom: 20px;
     overflow-x: hidden;
     overflow-y: visible;
