@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar p-2">
+  <div class="navBar p-2 d-flex align-items-center justify-content-around">
     <RouterLink :to="{ name: 'home'}">Home</RouterLink>
     <RouterLink :to="{ name: 'projects'}" >{{ data.language == 'Italian' ? 'Progetti' : 'Projects'}}</RouterLink>
     <RouterLink :to="{ name: 'mystory'}">{{ data.language == 'Italian' ? 'La Mia Storia' : 'Mystory'}}</RouterLink>

@@ -1,11 +1,41 @@
 @use './variables' as *;
 
+:root {
+    overflow: hidden;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+button {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    border-spacing: 0;
+    font-size: 16px;
+    font-weight: normal;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    text-decoration: none;
+    text-indent: 0;
+}
+
 ul {
     list-style: none;
+}
+
+.background {
+    z-index: -1;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+}
+
+.toggleLanguage {
+    position: fixed;
 }

@@ -1,49 +1,123 @@
 @use './variables' as *;
 
-// home
-.container.home {
-    height: calc(100vh - 80px);
+// HOME
+.bg-home {
+    background-image: url('/img/background-home.jpg');
+}
 
-    .row {
-        height: 100%;
+.container.home {
+    height: 100vh;
+    color: rgb(255, 255, 255);
+
+    .welcome {
+        position: absolute;
+        top: 50%;
+        -ms-transform: translate(0, -50%);
+        transform: translate(0, -50%);
+
+        h4 {
+            margin-top: 20px;
+        }
+
+    }
+
+    .homeWrap {
+        margin: 0 auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+
+        .avatar {
+            width: 200px;
+
+            img {
+                width: 100%;
+                aspect-ratio: 0.7;
+            }
+        }
+
+        .text {
+            width: 300px;
+
+            .name {
+                font-size: 50px;
+                font-weight: bold;
+            }
+
+        }
     }
 
 }
 
-// Projects
+// PROJECTS
+
+.bg-projects {
+    background-image: url('/img/background-projects.jpg');
+}
 
 .container.projects {
     height: 100vh;
-
-    .row {
-        height: 100%;
-    }
-
 }
 
 .projectsWrap {
+    flex-direction: column;
     top: 50%;
-    margin: 0;
-    position: absolute;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-
-    padding-bottom: 20px;
-    overflow-x: hidden;
-    overflow-y: visible;
-    height: 350px;
+    height: 80vh;
+    overflow: visible;
+    width: 100%;
     position: relative;
 
     .projectsNav {
         position: absolute;
         bottom: 0;
         left: 50%;
-        margin-top: 20px;
-        -ms-transform: translate(-50%, 0);
-        transform: translate(-50%, 0);
+        -ms-transform: translate(-50%, 150%);
+        transform: translate(-50%, 150%);
 
         * {
             margin: 0 5px;
         }
+
+        button {
+            text-align: center;
+            background-color: white;
+            border-radius: 25px;
+            padding: 7px 12px;
+
+
+            &:not(:disabled):hover {
+                background-color: red;
+            }
+
+            &:disabled {
+                background-color: rgba(134, 134, 134, 0.616);
+            }
+        }
     }
 }
+
+@media screen and (min-width: 768px) {
+
+    .projectsWrap {
+        height: 350px;
+        flex-direction: row;
+
+        .projectsNav {
+            top: 100%;
+            bottom: 0;
+            left: 50%;
+            -ms-transform: translate(-50%, 50%);
+            transform: translate(-50%, 50%);
+
+            * {
+                margin: 0 5px;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 1200px) {}

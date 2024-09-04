@@ -1,20 +1,23 @@
 <template>
-    <!-- <Navbar /> -->
+    <Navbar />
+    <div class="background bg-projects"></div>
+    <button class="toggleLanguage" @click="data.languageToggle()"> {{ data.languageMessage }} </button>
     <div class="container projects">
-        <div class="row">
-            <div class="col-12 projectsWrap d-flex align-items-center">
+            <div class="p-2 projectsWrap d-flex align-items-center">
                 <ProjectPreview v-for="project in visibleProjects()" 
                 :project="project" 
                 @toggleDetails="toggleDetails()" 
                 />
                 <div class="projectsNav" v-if="!this.detailsOn">
-                    <button class="slider left" @click="slide(this.currentPage-1)" :disabled="disableSliderLeft" ><</button>
-                    <button @click="slide(0)" :disabled="disableSlider(0)">.</button>
-                    <button v-for="pageNumber in this.pages" @click="slide(pageNumber)" :disabled="disableSlider(pageNumber)">.</button>
+                    <button class="slider left" 
+                        @click="slide(this.currentPage-1)" 
+                        :disabled="disableSliderLeft" 
+                        ><</button>
+                    <button @click="slide(0)" :disabled="disableSlider(0)">-</button>
+                    <button v-for="pageNumber in this.pages" @click="slide(pageNumber)" :disabled="disableSlider(pageNumber)">-</button>
                     <button class="slider right" @click="slide(this.currentPage+1)" :disabled="disableSliderRight" >></button>
                 </div>
             </div>
-        </div>
     </div>
     
 </template>
@@ -56,47 +59,105 @@
             },
             slide(pageNumber){
                 if(this.currentPage < pageNumber){
-                    gsap.to(`.projectPreview`, {
-                    autoAlpha: 0,
-                    x: -250,
-                    height: 0,
-                    duration: 0.3,
-                    onStart: () => {this.animationActive = true},
-                    onComplete: () => {this.currentPage = pageNumber}
-                })
-                gsap.set(`.projectPreview`, {
-                    delay: 0.3,
-                    x:+250
-                }) 
-                gsap.to(`.projectPreview`, {
-                    delay: 0.3,
-                    height: 250,
-                    autoAlpha: 1,
-                    x: 0,
-                    duration: 0.3,
-                    onComplete: () => { this.animationActive = false }
-                })
+                    const slide = gsap.matchMedia()
+
+                    // MOBILE
+                    slide.add("(max-width: 768px)",() => {
+                        const tl = gsap.timeline()
+                        tl.to(`.projectPreview`, {
+                            autoAlpha: 0,
+                            x: -250,
+                            height: 0,
+                            duration: 0.3,
+                            onStart: () => {this.animationActive = true},
+                            onComplete: () => {this.currentPage = pageNumber}
+                        })
+                        tl.set(`.projectPreview`, {
+                            x:+250
+                        }) 
+                        tl.to(`.projectPreview`, {
+                            height: 'calc(100%/3)',
+                            autoAlpha: 1,
+                            x: 0,
+                            duration: 0.3,
+                            onComplete: () => { this.animationActive = false }
+                        })
+                    })
+
+                    // DESKTOP
+                    slide.add("(min-width: 768px)",() => {
+                        const tl = gsap.timeline()
+                        tl.to(`.projectPreview`, {
+                            autoAlpha: 0,
+                            x: -250,
+                            height: 0,
+                            duration: 0.3,
+                            onStart: () => {this.animationActive = true},
+                            onComplete: () => {this.currentPage = pageNumber}
+                        })
+                        tl.set(`.projectPreview`, {
+                            x:+250
+                        }) 
+                        tl.to(`.projectPreview`, {
+                            height: 250,
+                            autoAlpha: 1,
+                            x: 0,
+                            duration: 0.3,
+                            onComplete: () => { this.animationActive = false }
+                        })
+                    })
+
+
+                    
                 } else if (this.currentPage > pageNumber) {
-                    gsap.to(`.projectPreview`, {
-                    autoAlpha: 0,
-                    x: +250,
-                    height: 0,
-                    duration: 0.3,
-                    onStart: () => {this.animationActive = true},
-                    onComplete: () => {this.currentPage = pageNumber}
-                })
-                gsap.set(`.projectPreview`, {
-                    delay: 0.3,
-                    x:-250
-                }) 
-                gsap.to(`.projectPreview`, {
-                    delay: 0.3,
-                    height: 250,
-                    autoAlpha: 1,
-                    x: 0,
-                    duration: 0.3,
-                    onComplete: () => { this.animationActive = false }
-                })
+                    const slide = gsap.matchMedia()
+
+                    // MOBILE
+                    slide.add("(max-width: 768px)",() => {
+                        const tl = gsap.timeline()
+                        tl.to(`.projectPreview`, {
+                            autoAlpha: 0,
+                            x: +250,
+                            height: 0,
+                            duration: 0.3,
+                            onStart: () => {this.animationActive = true},
+                            onComplete: () => {this.currentPage = pageNumber}
+                        })
+                        tl.set(`.projectPreview`, {
+                            x:-250
+                        }) 
+                        tl.to(`.projectPreview`, {
+                            height: 'calc(100%/3)',
+                            autoAlpha: 1,
+                            x: 0,
+                            duration: 0.3,
+                            onComplete: () => { this.animationActive = false }
+                        })
+                    })
+
+                    // DESKTOP
+                    slide.add("(min-width: 768px)",() => {
+                        const tl = gsap.timeline()
+                        tl.to(`.projectPreview`, {
+                            autoAlpha: 0,
+                            x: +250,
+                            height: 0,
+                            duration: 0.3,
+                            onStart: () => {this.animationActive = true},
+                            onComplete: () => {this.currentPage = pageNumber}
+                        })
+                        tl.set(`.projectPreview`, {
+                            x:-250
+                        }) 
+                        tl.to(`.projectPreview`, {
+                            height: 250,
+                            autoAlpha: 1,
+                            x: 0,
+                            duration: 0.3,
+                            onComplete: () => { this.animationActive = false }
+                        })
+                    })
+                    
                 }
             },           
             toggleDetails(){
@@ -136,18 +197,38 @@
             }
             console.log(pages)
             console.log(this.pages)
+
+
             gsap.set('.projectPreview', {
                 autoAlpha: 0,
                 height: 0,
-                width: 0,
-            })            
-            gsap.to('.projectPreview', {
+            }) 
+
+            let setup = gsap.matchMedia()
+
+            // MOBILE
+            setup.add("(max-width: 768px)",() => {
+                gsap.to('.projectPreview', {
+                autoAlpha: 1,
+                duration: 0.3 ,
+                height: 'calc(100%/3)',
+                aspectRatio: 1,
+                stagger: 0.2,
+                })
+            })
+            // DESKTOP
+            setup.add("(min-width: 768px)",() => {
+                gsap.to('.projectPreview', {
                 autoAlpha: 1,
                 duration: 0.3 ,
                 height: 250,
                 width: 250,
                 stagger: 0.2,
             })
+            })
+
+           
+
         }
     }
 </script>
