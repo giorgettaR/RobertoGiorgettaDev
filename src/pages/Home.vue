@@ -1,5 +1,7 @@
 <template>
   <Navbar />
+  <Footer />
+
   <div class="background bg-home"></div>
   <div class="container home">
     <div class="welcome">
@@ -33,6 +35,7 @@
 
 <script>
 import Navbar from '../components/Navbar.vue';
+import Footer from '../components/Footer.vue';
 import { data } from '../data.js';
 import { gsap } from 'gsap';
 
@@ -44,7 +47,8 @@ export default {
     }
   },        
   components: {
-    Navbar
+    Navbar,
+    Footer
   },
   props: {
 

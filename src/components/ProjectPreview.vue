@@ -1,6 +1,6 @@
 <template>
   <div
-  class="projectPreview d-flex flex-column align-items-center justify-content-evenly"
+  class="projectPreview flex-column align-items-center justify-content-evenly"
   :class="project.title"
   v-on:mouseover="hover(project.title)"
   v-on:mouseleave="leave(project.title)"
@@ -112,125 +112,45 @@ export default {
         hover(projectTitle){
           if (!this.detailsOn){
             this.animationTechs(projectTitle)
-            // DESKTOP
-            const hover = gsap.matchMedia()
-            hover.add("(min-width: 768px)",() => {
               gsap.to(`.${projectTitle}`, {
-              height: '270px',
-              width: '270px',
-              duration: 0.2,
+                scale: 1.2,
+                duration: 0.2,
               })
-            })
-
           }
         },
         leave(projectTitle){
           if (!this.detailsOn) {
-            const leave = gsap.matchMedia()
-            // DESKTOP
-            leave.add("(min-width: 768px)",() => {
               gsap.to(`.${projectTitle}`, {
-              height: '250px',
-              width: '250px',
-              duration: 0.2,
+                scale: 1,
+                duration: 0.2,
               })
-            })
           }
         },
         openDetails(projectTitle) {
-          console.log(this.detailsOn)
           const tl = gsap.timeline()
-          tl.set(`.projectPreview`, {
-            pointerEvents: 'none',
-          })    
-          tl.to(`.projectPreview`, {
+          tl.to([`.projectPreview`,'.projectsNav'], {
             autoAlpha: 0,
+            x: -250,
+            height: 0,
             duration: 0.3,
-          })          
-          tl.set(`.projectPreview`, {
-            position: 'absolute',
           })
-          tl.set(`.projectsWrap`, {
-            height: '100%',
+          tl.set([`.projectPreview`, 'projectsNav'], {
+              display: 'none'
           })
           tl.set(`.${projectTitle}`, {
-            pointerEvents: 'auto',
+            display: 'flex',
+            x: 0,
+            aspectRatio: 'unset',
             onComplete: () => {this.detailsOn = true}
-          })  
+          })
           tl.to(`.${projectTitle}`, {
-            position: 'static',
             autoAlpha: 1,
-            height: '100%',
-            maxWidth: '100%',
+            height: 'fit-content',
+            width:'80%',
             duration: 0.3,
           })
-          const openDetails = gsap.matchMedia()
-          openDetails.add("(min-width: 768px)",() => {
-            gsap.to(`.${projectTitle}`, {
-            width: '100%',
-            duration: 0.3,
-          })  
-          })  
-
         },
         closeDetails(projectTitle) {
-          const closeDetails = gsap.matchMedia()
-          // MOBILE
-          closeDetails.add("(max-width: 768px)",() => {
-            const tl = gsap.timeline()
-            tl.set(`.projectPreview`, {
-              pointerEvents: 'none',
-            })  
-            tl.to(`.${projectTitle}`, {
-              autoAlpha: 0,
-              duration: 0.3,
-            })
-            tl.set(`.projectPreview`, {
-              position: 'static',
-              height: 0,
-              onComplete: () => {this.detailsOn = false}
-            })
-            tl.set(`.projectsWrap`, {
-              height: '80vh',
-            })
-            tl.to(`.projectPreview`, {
-              autoAlpha: 1,
-              height: 'calc(100%/3)',
-              duration: 0.3,
-            })
-            tl.to(`.projectPreview`, {
-              pointerEvents: 'auto',
-            }) 
-          })
-          // DESKTOP
-          closeDetails.add("(min-width: 768px)",() => {
-            const tl = gsap.timeline()
-            tl.set(`.projectPreview`, {
-              pointerEvents: 'none',
-            })  
-            tl.to(`.${projectTitle}`, {
-              autoAlpha: 0,
-              duration: 0.3,
-            })
-            tl.set(`.projectPreview`, {
-              position: 'static',
-              height: 0,
-              onComplete: () => {this.detailsOn = false}
-            })
-            tl.to(`.projectPreview`, {
-              autoAlpha: 1,
-              height: 250,
-              width: 250,
-              duration: 0.3,
-            })
-            tl.to(`.projectsWrap`, {
-              height: '350px',
-              duration: 0.3,
-            })
-            tl.set(`.projectPreview`, {
-              pointerEvents: 'auto',
-            }) 
-          })
         },
     },
     mounted() {

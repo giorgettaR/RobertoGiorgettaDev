@@ -6,7 +6,6 @@
 }
 
 .container.home {
-    height: 100vh;
     color: rgb(255, 255, 255);
 
     .welcome {
@@ -58,25 +57,30 @@
 }
 
 .container.projects {
-    height: 100vh;
+    overflow-x: hidden;
 }
 
 .projectsWrap {
-    flex-direction: column;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    height: 80vh;
-    overflow: visible;
+    display: flex;
     width: 100%;
-    position: relative;
+    position: absolute;
+    margin-left: calc((var(--bs-gutter-x) * 0.5) * -1);
+    top: 0;
+    overflow: visible;
+    padding-top: 80px;
+    height: fit-content;
+
+    flex-direction: column;
+    gap: 20px;
+
+    .projectPreview:first-child {
+        margin-top: 20px;
+    }
 
     .projectsNav {
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        -ms-transform: translate(-50%, 150%);
-        transform: translate(-50%, 150%);
+        margin-bottom: 20px;
+        width: 100%;
+        height: 40px;
 
         * {
             margin: 0 5px;
@@ -88,11 +92,6 @@
             border-radius: 25px;
             padding: 7px 12px;
 
-
-            &:not(:disabled):hover {
-                background-color: red;
-            }
-
             &:disabled {
                 background-color: rgba(134, 134, 134, 0.616);
             }
@@ -103,15 +102,24 @@
 @media screen and (min-width: 768px) {
 
     .projectsWrap {
-        height: 350px;
+        // height: 300px;
+        padding-top: 0px;
+        position: static;
+        margin: 0 auto;
+        -ms-transform: translate(0, 0);
+        transform: translate(0, 0);
         flex-direction: row;
 
+        .projectPreview:first-child {
+            margin-top: 0px;
+        }
+
         .projectsNav {
-            top: 100%;
+            position: absolute;
             bottom: 0;
             left: 50%;
-            -ms-transform: translate(-50%, 50%);
-            transform: translate(-50%, 50%);
+            -ms-transform: translate(-50%, 250%);
+            transform: translate(-50%, 250%);
 
             * {
                 margin: 0 5px;

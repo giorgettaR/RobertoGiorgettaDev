@@ -1,12 +1,39 @@
 @use './variables' as *;
 
 
-// navbar
+// NAVBAR
 
 .navBar {
     position: fixed;
     height: 80px;
     width: 100vw;
+    z-index: 2;
+    background-color: black;
+
+    a {
+        text-decoration: none;
+    }
+
+    .flag {
+        height: 30px;
+        aspect-ratio: 1;
+
+        img {
+            height: 100%;
+            aspect-ratio: 1;
+        }
+    }
+}
+
+// FOOTER
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    height: 80px;
+    width: 100vw;
+    z-index: 2;
+    background-color: black;
 
     a {
         text-decoration: none;
@@ -16,7 +43,8 @@
 // ProjectPreview
 
 .projectPreview {
-    height: calc(100%/3);
+    display: flex;
+    height: 250px;
     aspect-ratio: 1;
     margin: 0 auto;
     overflow: hidden;

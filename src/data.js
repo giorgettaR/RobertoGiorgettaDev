@@ -2,14 +2,14 @@ import { reactive } from 'vue';
 
 export const data = reactive({
     language: 'Italian',
-    languageMessage: 'English',
+    flag: 'english.png',
     languageToggle() {
         if (this.language == 'Italian') {
             this.language = 'English'
-            this.languageMessage = 'Italiano'
+            this.flag = 'italian.png'
         } else {
             this.language = 'Italian'
-            this.languageMessage = 'English'
+            this.flag = 'english.png'
         }
     }
 })
