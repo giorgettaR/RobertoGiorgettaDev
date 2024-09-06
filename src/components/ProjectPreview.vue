@@ -6,7 +6,23 @@
   v-on:mouseleave="leave(project.title)"
   >
     <div class="title p-2">{{ project.title }}</div>
-
+    <div v-if="this.detailsOn">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates illo, labore facere id, veritatis quas soluta maxime praesentium, odio dolorem laborum hic ut eaque. Totam voluptatum sequi perferendis porro quasi.</div>
+    <div v-if="this.detailsOn">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates illo, labore facere id, veritatis quas soluta maxime praesentium, odio dolorem laborum hic ut eaque. Totam voluptatum sequi perferendis porro quasi.</div>
+    <div v-if="this.detailsOn">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates illo, labore facere id, veritatis quas soluta maxime praesentium, odio dolorem laborum hic ut eaque. Totam voluptatum sequi perferendis porro quasi.</div>
+    <div v-if="this.detailsOn">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates illo, labore facere id, veritatis quas soluta maxime praesentium, odio dolorem laborum hic ut eaque. Totam voluptatum sequi perferendis porro quasi.</div>
+    <div v-if="this.detailsOn">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates illo, labore facere id, veritatis quas soluta maxime praesentium, odio dolorem laborum hic ut eaque. Totam voluptatum sequi perferendis porro quasi.</div>
+    <div v-if="this.detailsOn">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates illo, labore facere id, veritatis quas soluta maxime praesentium, odio dolorem laborum hic ut eaque. Totam voluptatum sequi perferendis porro quasi.</div>
+    <div v-if="this.detailsOn">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates illo, labore facere id, veritatis quas soluta maxime praesentium, odio dolorem laborum hic ut eaque. Totam voluptatum sequi perferendis porro quasi.</div>
+    <div v-if="this.detailsOn">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates illo, labore facere id, veritatis quas soluta maxime praesentium, odio dolorem laborum hic ut eaque. Totam voluptatum sequi perferendis porro quasi.</div>
+    <div v-if="this.detailsOn">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates illo, labore facere id, veritatis quas soluta maxime praesentium, odio dolorem laborum hic ut eaque. Totam voluptatum sequi perferendis porro quasi.</div>
+    <div v-if="this.detailsOn">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates illo, labore facere id, veritatis quas soluta maxime praesentium, odio dolorem laborum hic ut eaque. Totam voluptatum sequi perferendis porro quasi.</div>
+    <div v-if="this.detailsOn">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates illo, labore facere id, veritatis quas soluta maxime praesentium, odio dolorem laborum hic ut eaque. Totam voluptatum sequi perferendis porro quasi.</div>
+    <div v-if="this.detailsOn">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates illo, labore facere id, veritatis quas soluta maxime praesentium, odio dolorem laborum hic ut eaque. Totam voluptatum sequi perferendis porro quasi.</div>
+    <div v-if="this.detailsOn">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates illo, labore facere id, veritatis quas soluta maxime praesentium, odio dolorem laborum hic ut eaque. Totam voluptatum sequi perferendis porro quasi.</div>
+    <div v-if="this.detailsOn">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates illo, labore facere id, veritatis quas soluta maxime praesentium, odio dolorem laborum hic ut eaque. Totam voluptatum sequi perferendis porro quasi.</div>
+    <div v-if="this.detailsOn">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates illo, labore facere id, veritatis quas soluta maxime praesentium, odio dolorem laborum hic ut eaque. Totam voluptatum sequi perferendis porro quasi.</div>
+    <div v-if="this.detailsOn">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates illo, labore facere id, veritatis quas soluta maxime praesentium, odio dolorem laborum hic ut eaque. Totam voluptatum sequi perferendis porro quasi.</div>
+    <div v-if="this.detailsOn">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates illo, labore facere id, veritatis quas soluta maxime praesentium, odio dolorem laborum hic ut eaque. Totam voluptatum sequi perferendis porro quasi.</div>
     <button class="details" 
       v-if="!this.detailsOn"
       @click="openDetails(project.title);
@@ -128,6 +144,12 @@ export default {
         },
         openDetails(projectTitle) {
           const tl = gsap.timeline()
+          tl.set('html', {
+            overflow: 'hidden'
+          })          
+          tl.set('.projectsWrap', {
+            height: 'fit-content',
+          })
           tl.to([`.projectPreview`,'.projectsNav'], {
             autoAlpha: 0,
             x: -250,
@@ -146,11 +168,86 @@ export default {
           tl.to(`.${projectTitle}`, {
             autoAlpha: 1,
             height: 'fit-content',
-            width:'80%',
+            width:'100%',
             duration: 0.3,
+          })            
+          tl.set('html', {
+            overflow: 'auto'
           })
         },
         closeDetails(projectTitle) {
+          gsap.set('html', {
+              overflow: 'hidden'
+          })
+          let setup = gsap.matchMedia()
+
+          // MOBILE
+          setup.add("(max-width: 768px)",() => {
+            const tl = gsap.timeline()
+            tl.to(`.${projectTitle}`, {
+              autoAlpha: 0,
+              height: 0,
+              duration: 0.5,
+            })
+            tl.set(`.projectPreview`, {
+              display: 'flex',
+              onComplete: () => {this.detailsOn = false}
+            })
+            tl.to('.projectsNav', {
+              height: '40px',
+              x: 0,
+              autoAlpha: 1,
+              duration: 0.3,
+              display: 'flex',
+            })
+            tl.to(['.projectPreview', `.${projectTitle}`], {
+              autoAlpha: 1,
+              x: 0,
+              duration: 0.3 ,
+              height: '250px',
+              width: '250px',
+              stagger: 0.2,
+            })
+            tl.set('html', {
+                overflow: 'auto'
+            })
+          })
+          // DESKTOP
+          setup.add("(min-width: 768px)",() => {
+            const tl = gsap.timeline()
+            tl.to(`.${projectTitle}`, {
+              autoAlpha: 0,
+              x: -250,
+              height: 0,
+              duration: 0.3,
+            })
+            tl.set(`.projectPreview`, {
+              autoAlpha: 0,
+              display: 'flex',
+              onComplete: () => {this.detailsOn = false}
+            })
+            tl.set('.projectsWrap', {
+              height: '100%',
+            })
+            tl.to('.projectsNav', {
+              height: '40px',
+              x: 0,
+              autoAlpha: 1,
+              duration: 0.3,
+              display: 'flex',
+            })
+            tl.to(['.projectPreview', `.${projectTitle}`], {
+              autoAlpha: 1,
+              x: 0,
+              duration: 0.3 ,
+              height: 300,
+              width: 300,
+              stagger: 0.2,
+            },'<')
+            tl.set('html', {
+                overflow: 'auto'
+            })
+          })
         },
     },
     mounted() {

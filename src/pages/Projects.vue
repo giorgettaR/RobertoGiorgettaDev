@@ -3,48 +3,48 @@
     <Footer />
     <div class="background bg-projects"></div>
     <div class="container projects">
-            <div class="projectsWrap d-flex align-items-center">
-                <ProjectPreview v-for="project in visibleProjects()" 
-                :project="project" 
-                @toggleDetails="toggleDetails()"
-                class="projectPreview"
-                />
-                <div class="projectsNav d-flex justify-content-center" v-if="!this.detailsOn">
-                    <button class="slider" 
-                        id="sleft"
-                        @click="slide(this.currentPage-1)" 
-                        v-on:mouseover="hoverSlider('left')"
-                        v-on:mouseleave="leaveSlider('left')"
-                        :disabled="disableSliderLeft" >
-                        <
-                    </button>
-                    <button class="slider" 
-                        id="s0"
-                        @click="slide(0)" 
-                        v-on:mouseover="hoverSlider('0')"
-                        v-on:mouseleave="leaveSlider('0')"
-                        :disabled="disableSlider(0)">
-                        0
-                    </button>
-                    <button class="slider"
-                        :id="'s' + pageNumber"
-                        v-for="pageNumber in this.pages"
-                        @click="slide(pageNumber)"
-                        v-on:mouseover="hoverSlider(pageNumber)"
-                        v-on:mouseleave="leaveSlider(pageNumber)"
-                        :disabled="disableSlider(pageNumber)">
-                        {{pageNumber}}
-                    </button>
-                    <button class="slider"
-                        id="sright"
-                        @click="slide(this.currentPage+1)"
-                        v-on:mouseover="hoverSlider('right')"
-                        v-on:mouseleave="leaveSlider('right')"
-                        :disabled="disableSliderRight" >
-                        >
-                    </button>
-                </div>
+        <div class="projectsWrap d-flex align-items-center">
+            <div class="projectsNav d-flex justify-content-center">
+                <button class="slider" 
+                    id="sleft"
+                    @click="slide(this.currentPage-1)" 
+                    v-on:mouseover="hoverSlider('left')"
+                    v-on:mouseleave="leaveSlider('left')"
+                    :disabled="disableSliderLeft" >
+                    <
+                </button>
+                <button class="slider" 
+                    id="s0"
+                    @click="slide(0)" 
+                    v-on:mouseover="hoverSlider('0')"
+                    v-on:mouseleave="leaveSlider('0')"
+                    :disabled="disableSlider(0)">
+                    0
+                </button>
+                <button class="slider"
+                    :id="'s' + pageNumber"
+                    v-for="pageNumber in this.pages"
+                    @click="slide(pageNumber)"
+                    v-on:mouseover="hoverSlider(pageNumber)"
+                    v-on:mouseleave="leaveSlider(pageNumber)"
+                    :disabled="disableSlider(pageNumber)">
+                    {{pageNumber}}
+                </button>
+                <button class="slider"
+                    id="sright"
+                    @click="slide(this.currentPage+1)"
+                    v-on:mouseover="hoverSlider('right')"
+                    v-on:mouseleave="leaveSlider('right')"
+                    :disabled="disableSliderRight" >
+                    >
+                </button>
             </div>
+            <ProjectPreview v-for="project in visibleProjects()" 
+            :project="project" 
+            @toggleDetails="toggleDetails()"
+            class="projectPreview"
+            />
+        </div>
     </div>
     
 </template>
@@ -112,7 +112,7 @@
 
                         // HIDE
                         tl.addLabel('hide')
-                        tl.to([`.projectPreview`,'.projectsNav'], {
+                        tl.to(`.projectPreview`, {
                             autoAlpha: 0,
                             x: -250,
                             height: 0,
@@ -120,9 +120,6 @@
                             onStart: () => {this.animationActive = true},
                             onComplete: () => {this.currentPage = pageNumber}
                         })
-                        tl.set('.projectsNav', {
-                            opacity: 0,
-                        }, 'hide')
                         tl.set(`.projectPreview`, {
                             x:+250
                         })
@@ -134,11 +131,6 @@
                             x: 0,
                             duration: 0.3,
                             onComplete: () => { this.animationActive = false }
-                        })
-                        tl.set('.projectsNav', {
-                            autoAlpha: 1,
-                            x: 0,
-                            height: '40px',
                         })
                         tl.set('html', {
                             overflow: 'auto'
@@ -192,7 +184,7 @@
 
                         // HIDE
 
-                        tl.to([`.projectPreview`,'.projectsNav'], {
+                        tl.to(`.projectPreview`, {
                             autoAlpha: 0,
                             x: +250,
                             height: 0,
@@ -212,12 +204,6 @@
                             duration: 0.3,
                             onComplete: () => { this.animationActive = false }
                         })
-                        tl.set('.projectsNav', {
-                            autoAlpha: 1,
-                            x: 0,
-                            height: '40px',
-                        })
-
                         tl.set('html', {
                             overflow: 'auto'
                         })
@@ -306,7 +292,7 @@
                 autoAlpha: 1,
                 duration: 0.3 ,
                 height: '250px',
-                aspectRatio: 1,
+                width: '250px',
                 stagger: 0.2,
                 })
             })
@@ -315,14 +301,11 @@
                 gsap.to('.projectPreview', {
                 autoAlpha: 1,
                 duration: 0.3 ,
-                height: 250,
-                width: 250,
+                height: '300px',
+                width: '300px',
                 stagger: 0.2,
             })
             })
-
-           
-
         }
     }
 </script>
