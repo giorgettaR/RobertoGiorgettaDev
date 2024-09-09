@@ -2,8 +2,8 @@
   <div
   class="projectPreview flex-column align-items-center justify-content-evenly"
   :class="project.title"
-  v-on:mouseover="hover(project.title)"
-  v-on:mouseleave="leave(project.title)"
+  v-on:mouseenter="hoverCard(project.title)"
+  v-on:mouseleave="leaveCard(project.title)"
   >
     <div class="title p-2">{{ project.title }}</div>
     <div v-if="this.detailsOn">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates illo, labore facere id, veritatis quas soluta maxime praesentium, odio dolorem laborum hic ut eaque. Totam voluptatum sequi perferendis porro quasi.</div>
@@ -26,7 +26,8 @@
     <button class="details" 
       v-if="!this.detailsOn"
       @click="openDetails(project.title);
-      $emit('toggleDetails')">
+      $emit('toggleDetails')"
+      v-on:mouseover="hoverDetails(project.title)">
       {{ data.language == 'Italian' ? 'Dettagli' : 'Details'}}
     </button>
 
@@ -78,7 +79,7 @@ export default {
     data() {
         return {
           detailsOn: false,
-          data
+          data,
         }
     },
     methods:{
@@ -97,35 +98,36 @@ export default {
             autoAlpha: 1,
             duration: 1
           })
-          gsap.to(`.tech`,{
-              rotation: 360,
-              duration: 1,
-              stagger: 0.1,
+          gsap.fromTo(`.tech`,{
+            rotation: -360,
+          }, {
+            rotation: 0,
+            duration: 1,
+            stagger: 0.1,
           })
         },
-        animationTechs(projecTitle){
+        animationTechs(projectTitle){
           const rotate = gsap.timeline()
-          rotate.set(`.${projecTitle} .tech`,{
-              rotation: 0,
-          })
-          rotate.to(`.${projecTitle} .tech`,{
-              rotation: 360,
-              duration: 1,
-              stagger: 0.1,
+          rotate.fromTo(`.${projectTitle} .tech`,{
+            rotation: -360,
+          },{
+            rotation: 0,
+            duration: 1,
+            stagger: 0.1,
           })
         },
         openGitRepository(){
             window.open('https://github.com/giorgettaR/vue-boolzapp')
         },
         getImgPath(imgFile) {
-                let imgPath = '/img/' + imgFile
-                return imgPath;
+          let imgPath = '/img/' + imgFile
+          return imgPath;
         },
         getImgPathSvg(imgFile) {
-                let imgPath = '/img/' + imgFile + '.svg'
-                return imgPath;
+          let imgPath = '/img/' + imgFile + '.svg'
+          return imgPath;
         },
-        hover(projectTitle){
+        hoverCard(projectTitle){
           if (!this.detailsOn){
             this.animationTechs(projectTitle)
               gsap.to(`.${projectTitle}`, {
@@ -134,13 +136,25 @@ export default {
               })
           }
         },
-        leave(projectTitle){
+        leaveCard(projectTitle){
           if (!this.detailsOn) {
               gsap.to(`.${projectTitle}`, {
                 scale: 1,
                 duration: 0.2,
               })
           }
+        },
+        hoverDetails(projectTitle){
+          const tl = gsap.timeline()
+            this.bouncing = true
+            tl.to(`.${projectTitle} .details`, {
+              scale: 1.2,
+              duration: 0.4,
+            })
+            tl.to(`.${projectTitle} .details`, {
+              scale: 1,
+              duration: 0.4,
+            })
         },
         openDetails(projectTitle) {
           const tl = gsap.timeline()
@@ -186,7 +200,6 @@ export default {
             const tl = gsap.timeline()
             tl.to(`.${projectTitle}`, {
               autoAlpha: 0,
-              height: 0,
               duration: 0.5,
             })
             tl.set(`.projectPreview`, {
@@ -218,8 +231,7 @@ export default {
             tl.to(`.${projectTitle}`, {
               autoAlpha: 0,
               x: -250,
-              height: 0,
-              duration: 0.3,
+              duration: 0.5,
             })
             tl.set(`.projectPreview`, {
               autoAlpha: 0,

@@ -1,6 +1,5 @@
 <template>
     <Navbar />
-    <Footer />
     <div class="background bg-projects"></div>
     <div class="container projects">
         <div class="projectsWrap d-flex align-items-center">
@@ -11,7 +10,7 @@
                     v-on:mouseover="hoverSlider('left')"
                     v-on:mouseleave="leaveSlider('left')"
                     :disabled="disableSliderLeft" >
-                    <
+                    <font-awesome-icon class="fa-xl" :icon="['fas', 'caret-left']" />
                 </button>
                 <button class="slider" 
                     id="s0"
@@ -36,7 +35,7 @@
                     v-on:mouseover="hoverSlider('right')"
                     v-on:mouseleave="leaveSlider('right')"
                     :disabled="disableSliderRight" >
-                    >
+                    <font-awesome-icon class="fa-xl" :icon="['fas', 'caret-right']" />
                 </button>
             </div>
             <ProjectPreview v-for="project in visibleProjects()" 
@@ -52,7 +51,6 @@
 <script>
     import { data } from '../data.js';
     import Navbar from '../components/Navbar.vue';
-    import Footer from '../components/Footer.vue';
     import projects from '../projects.json'
     import ProjectPreview from '../components/ProjectPreview.vue';
     import { gsap } from 'gsap'
@@ -73,7 +71,6 @@
         },
         components: {
             Navbar,
-            Footer,
             ProjectPreview
         },
         methods: {
@@ -87,13 +84,13 @@
                 return visible
             },
             hoverSlider(buttonId) {
-                gsap.to(`#s${buttonId}`, {
+                gsap.to(`#s${buttonId}:not(:disabled)`, {
                 scale: 1.3,
                 duration: 0.3
                 })
             },
             leaveSlider(buttonId) {
-                gsap.to(`#s${buttonId}`, {
+                gsap.to(`#s${buttonId}:not(:disabled)`, {
                 scale: 1,
                 duration: 0.3
                 })

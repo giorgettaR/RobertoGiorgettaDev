@@ -31,10 +31,10 @@ ul {
 .background {
     z-index: -1;
     position: fixed;
-    height: calc(100% - 160px);
+    height: calc(100% - 80px);
     width: 100%;
     background-size: cover;
-    margin: 80px 0;
+    margin-top: 80px;
 }
 
 .container {
