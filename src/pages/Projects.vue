@@ -18,7 +18,7 @@
                     v-on:mouseover="hoverSlider('0')"
                     v-on:mouseleave="leaveSlider('0')"
                     :disabled="disableSlider(0)">
-                    0
+                    1
                 </button>
                 <button class="slider"
                     :id="'s' + pageNumber"
@@ -27,7 +27,7 @@
                     v-on:mouseover="hoverSlider(pageNumber)"
                     v-on:mouseleave="leaveSlider(pageNumber)"
                     :disabled="disableSlider(pageNumber)">
-                    {{pageNumber}}
+                    {{pageNumber+1}}
                 </button>
                 <button class="slider"
                     id="sright"
@@ -90,7 +90,7 @@
                 })
             },
             leaveSlider(buttonId) {
-                gsap.to(`#s${buttonId}:not(:disabled)`, {
+                gsap.to(`#s${buttonId}`, {
                 scale: 1,
                 duration: 0.3
                 })
@@ -111,14 +111,14 @@
                         tl.addLabel('hide')
                         tl.to(`.projectPreview`, {
                             autoAlpha: 0,
-                            x: -250,
+                            x: -50,
                             height: 0,
                             duration: 0.3,
                             onStart: () => {this.animationActive = true},
                             onComplete: () => {this.currentPage = pageNumber}
                         })
                         tl.set(`.projectPreview`, {
-                            x:+250
+                            x:+50
                         })
 
                         // SHOW
@@ -144,14 +144,14 @@
                         // HIDE
                         tl.to(`.projectPreview`, {
                             autoAlpha: 0,
-                            x: -250,
+                            x: -50,
                             height: 0,
                             duration: 0.3,
                             onStart: () => {this.animationActive = true},
                             onComplete: () => {this.currentPage = pageNumber}
                         })
                         tl.set(`.projectPreview`, {
-                            x:+250
+                            x:+50
                         })
 
                         // SHOW
@@ -183,14 +183,14 @@
 
                         tl.to(`.projectPreview`, {
                             autoAlpha: 0,
-                            x: +250,
+                            x: +50,
                             height: 0,
                             duration: 0.3,
                             onStart: () => {this.animationActive = true},
                             onComplete: () => {this.currentPage = pageNumber}
                         })
                         tl.set(`.projectPreview`, {
-                            x:-250
+                            x:-50
                         })
 
                         // SHOW
@@ -216,14 +216,14 @@
                         // HIDE
                         tl.to(`.projectPreview`, {
                             autoAlpha: 0,
-                            x: +250,
+                            x: +50,
                             height: 0,
                             duration: 0.3,
                             onStart: () => {this.animationActive = true},
                             onComplete: () => {this.currentPage = pageNumber}
                         })
                         tl.set(`.projectPreview`, {
-                            x:-250
+                            x:-50
                         })
 
                         // SHOW

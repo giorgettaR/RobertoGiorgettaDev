@@ -1,27 +1,61 @@
-<template>
+<template style="margin-bottom: 200px;">
   <Navbar />
   <div class="background bg-home"></div>
 
-  <div class="container home flex-column">
-    <div class="row welcome">
-      <div class="hero">
-        <h1 class="col-12">Benvenuto...</h1>
-        <h1 class="col-12">Io sono Roberto</h1>
-        <div class="avatar p-4">
-          <img src="/img/avatar-home.jpg" alt="">
-        </div>
+  <div class="container home flex-column" >
+    <div class="hero">
+      <div class="title">
+        <h1 class="">
+          Benvenuto 
+          <font-awesome-icon :icon="['far', 'face-grin-beam']" />
+        </h1>
       </div>
-      
-      <h1 class="col-12">in questo portale</h1>
-      <h1 class="col-12">potrai esplorare</h1>
-      <h1 class="col-12">i miei progetti...</h1>
-      <h1 class="col-12">...e qualcosa in più</h1>
+      <div class="title">
+        <h1 class="">sono Roberto</h1>
+      </div>
+      <div class="title">
+        <h1 class="">un Junior Web Developer</h1>
+      </div>
+      <div class="avatar p-4">
+        <img src="/img/avatar-home.jpg" alt="">
+      </div>
+      <div class="arrows">
+        <font-awesome-icon class="fa-2xl" :icon="['fas', 'chevron-down']" />
+        <font-awesome-icon class="fa-2xl" :icon="['fas', 'chevron-down']" />
+        <font-awesome-icon class="fa-2xl" :icon="['fas', 'chevron-down']" />
+      </div>
     </div>
+    <div class="nav">
+      <span class="advice">
+        continua a scorrere
+        <font-awesome-icon :icon="['far', 'face-grin-wink']" />
+      </span>
+      <div class="line portal">
+        <h1 class="">in questo portale</h1>
+        <h1 class="">potrai</h1>
+      </div>
+      <!-- <div class="line projects">
+        <h1 class="">esplorare</h1>
+        <h1 class="">i miei progetti</h1>
 
+      </div>
+      <div class="line education">
+        <h1 class="">informarti riguardo</h1>
+        <h1 class="">la mia formazione</h1>
 
-
-      <div class="text p-4">
-        <button @click="animation()">Animation</button>
+      </div>
+      <div class="line contacts">
+        <h1 class="">entrare in</h1>
+        <h1 class="">contatto con me</h1>
+      </div> -->
+    </div>
+    <div class="">
+        <h4 class="">in questo portale</h4>
+        <h4 class="">potrai</h4>
+      </div>
+      <div class="line portal">
+        <h4 class="">in questo portale</h4>
+        <h4 class="">potrai</h4>
       </div>
   </div>
     
@@ -39,13 +73,17 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger)
 
-// gsap.to()
+
+
+
+
 
 export default {
 
   data() {
     return {
-      data
+      data,
+      endPage: false
     }
   },        
   components: {
@@ -55,17 +93,54 @@ export default {
 
   },
   methods: {
-    animation(){
+    arrowsAnimation(){
+      const tl = gsap.timeline({
+        repeat: -1,
+      })
+      tl.set('.arrows *', {
+          autoAlpha: 0,
+          y: -50,
+        })
+        .to('.arrows *', {
+          autoAlpha: 1,
+          y: 0,
+          stagger: 0.1
+        })
+        .to('.arrows *', {
+          autoAlpha: 0,
+          y: 50,
+          stagger: 0.1
+        })
     },
 
   },
   mounted() {
-    gsap.fromTo('.hero *', {
+    const tl = gsap.timeline()
+    tl.from('.line', {
+      autoAlpha: 0,
+      x: -100,
+    })
+    tl.to('.line', {
+      autoAlpha: 0,
+      x: 50,
+    })
+    ScrollTrigger.create({
+      animation: tl,
+      trigger: '.nav',
+      scrub: true,
+      markers: true,
+      start: 'center center',
+      end:'+=2500',
+      pin: true
+    })
+
+    gsap.fromTo(['.title','.avatar'], {
       autoAlpha: 0,
     }, {
       autoAlpha: 1,
       duration: 2,
-      stagger: 0.5
+      stagger: 0.5,
+      onComplete: () => {this.arrowsAnimation()},
     })
   }
 }

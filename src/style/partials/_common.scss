@@ -8,6 +8,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
+    font-family: "Oswald", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
 }
 
 button {
@@ -32,7 +37,7 @@ ul {
     z-index: -1;
     position: fixed;
     height: calc(100% - 80px);
-    width: 100%;
+    width: 100vw;
     background-size: cover;
     margin-top: 80px;
 }
