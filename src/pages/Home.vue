@@ -30,34 +30,24 @@
         continua a scorrere
         <font-awesome-icon :icon="['far', 'face-grin-wink']" />
       </span>
-      <div class="line portal">
+      <div class="slide start">
         <h1 class="">in questo portale</h1>
         <h1 class="">potrai</h1>
       </div>
-      <!-- <div class="line projects">
+      <div class="slide projects">
         <h1 class="">esplorare</h1>
         <h1 class="">i miei progetti</h1>
-
       </div>
-      <div class="line education">
+      <div class="slide education">
         <h1 class="">informarti riguardo</h1>
         <h1 class="">la mia formazione</h1>
-
       </div>
-      <div class="line contacts">
+      <div class="slide contacts">
         <h1 class="">entrare in</h1>
         <h1 class="">contatto con me</h1>
-      </div> -->
+      </div>
     </div>
-    <div class="">
-        <h4 class="">in questo portale</h4>
-        <h4 class="">potrai</h4>
-      </div>
-      <div class="line portal">
-        <h4 class="">in questo portale</h4>
-        <h4 class="">potrai</h4>
-      </div>
-  </div>
+</div>
     
   
   
@@ -72,11 +62,6 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger)
-
-
-
-
-
 
 export default {
 
@@ -116,22 +101,47 @@ export default {
   },
   mounted() {
     const tl = gsap.timeline()
-    tl.from('.line', {
-      autoAlpha: 0,
-      x: -100,
-    })
-    tl.to('.line', {
-      autoAlpha: 0,
-      x: 50,
-    })
+    tl.from('.slide.start', {
+        autoAlpha: 0,
+        x: -100,
+      })
+      .to('.slide.start', {
+        autoAlpha: 0,
+        x: 50,
+      })
+      .from('.slide.projects', {
+        autoAlpha: 0,
+        x: 100,
+      })
+      .to('.slide.projects', {
+        autoAlpha: 0,
+        x: -50,
+      })
+      .from('.slide.education', {
+        autoAlpha: 0,
+        x: -100,
+      })
+      .to('.slide.education', {
+        autoAlpha: 0,
+        x: 50,
+      })
+      .from('.slide.contacts', {
+        autoAlpha: 0,
+        x: 100,
+      })
+      .to('.slide.contacts', {
+        autoAlpha: 0,
+        x: -50,
+      })
+
     ScrollTrigger.create({
       animation: tl,
       trigger: '.nav',
-      scrub: true,
-      markers: true,
+      scrub: 2,
       start: 'center center',
-      end:'+=2500',
-      pin: true
+      end:'+=6000',
+      pin: true,
+      pinSpacing: true
     })
 
     gsap.fromTo(['.title','.avatar'], {
