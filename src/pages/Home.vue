@@ -2,49 +2,57 @@
   <Navbar />
   <div class="background bg-home"></div>
 
-  <div class="container home flex-column" >
+  <div class="container home" >
     <div class="hero">
       <div class="title">
         <h1 class="">
-          Benvenuto 
+          {{ data.language == 'Italian' ? 'BENVENUTO' : 'WELCOME'}} 
           <font-awesome-icon :icon="['far', 'face-grin-beam']" />
         </h1>
       </div>
       <div class="title">
-        <h1 class="">sono Roberto</h1>
+        <h1 class="">{{ data.language == 'Italian' ? 'sono ROBERTO' : `I'm ROBERTO`}}</h1>
       </div>
       <div class="title">
-        <h1 class="">un Junior Web Developer</h1>
+        <h1 class="">{{ data.language == 'Italian' ? 'un Jr Web Developer' : 'a Jr Web Developer'}}</h1>
       </div>
-      <div class="avatar p-4">
+      <div class="avatar">
         <img src="/img/avatar-home.jpg" alt="">
       </div>
       <div class="arrows">
         <font-awesome-icon class="fa-2xl" :icon="['fas', 'chevron-down']" />
         <font-awesome-icon class="fa-2xl" :icon="['fas', 'chevron-down']" />
         <font-awesome-icon class="fa-2xl" :icon="['fas', 'chevron-down']" />
+        <font-awesome-icon class="fa-2xl" :icon="['fas', 'chevron-down']" />
+        <font-awesome-icon class="fa-2xl" :icon="['fas', 'chevron-down']" />
       </div>
     </div>
     <div class="nav">
-      <span class="advice">
-        continua a scorrere
+      <div v-if="!this.endPage" class="advice">
+        {{ data.language == 'Italian' ? 'continua a scorrere' : 'keep scrolling'}}
         <font-awesome-icon :icon="['far', 'face-grin-wink']" />
-      </span>
+      </div>
       <div class="slide start">
-        <h1 class="">in questo portale</h1>
-        <h1 class="">potrai</h1>
+        <h1 class="">{{ data.language == 'Italian' ? 'in questo portale' : 'in this website'}}</h1>
+        <h1 class="">{{ data.language == 'Italian' ? 'potrai' : 'you can'}}</h1>
       </div>
       <div class="slide projects">
-        <h1 class="">esplorare</h1>
-        <h1 class="">i miei progetti</h1>
+        <RouterLink :to="{ name: 'projects'}" >
+          <h1 class="">{{ data.language == 'Italian' ? 'esplorare' : 'explore'}}</h1>
+          <h1 class="">{{ data.language == 'Italian' ? 'i miei progetti' : 'my projects'}}</h1>
+        </RouterLink>
       </div>
       <div class="slide education">
-        <h1 class="">informarti riguardo</h1>
-        <h1 class="">la mia formazione</h1>
+        <RouterLink :to="{ name: 'mystory'}" >
+          <h1 class="">{{ data.language == 'Italian' ? 'informarti riguardo' : 'learn about'}}</h1>
+          <h1 class="">{{ data.language == 'Italian' ? 'la mia formazione' : 'my education'}}</h1>
+        </RouterLink>
       </div>
       <div class="slide contacts">
-        <h1 class="">entrare in</h1>
-        <h1 class="">contatto con me</h1>
+        <RouterLink :to="{ name: 'contacts'}" >
+          <h1 class="">{{ data.language == 'Italian' ? 'entrare in contatto' : 'contact me'}}</h1>
+          <h1 class="">{{ data.language == 'Italian' ? 'con me' : ''}}</h1>
+        </RouterLink>
       </div>
     </div>
 </div>
@@ -78,13 +86,14 @@ export default {
 
   },
   methods: {
+    // ANIMAZIONE FRECCE
     arrowsAnimation(){
       const tl = gsap.timeline({
         repeat: -1,
       })
       tl.set('.arrows *', {
           autoAlpha: 0,
-          y: -50,
+          y: -100,
         })
         .to('.arrows *', {
           autoAlpha: 1,
@@ -93,62 +102,70 @@ export default {
         })
         .to('.arrows *', {
           autoAlpha: 0,
-          y: 50,
+          y: 100,
           stagger: 0.1
         })
     },
 
   },
   mounted() {
+
+    gsap.registerEffect({
+      name: 'fadeIn',
+      effect: (targets, config) => {
+        return gsap.from(targets, {
+          autoAlpha: 0,
+          x: config.x,
+          y: config.y,
+          duration: config.duration,
+          stagger: config.stagger,
+          onComplete: config.onComplete
+        })
+      },
+      defaults: { x: 0, y: 0, stagger: 1, duration: 1, onComplete: ()=>{}},
+      extendTimeline: true,
+    })
+
+    gsap.registerEffect({
+      name: 'fadeOut',
+      effect: (targets, config) => {
+        return gsap.to(targets, {
+          autoAlpha: 0,
+          x: config.x,
+          y: config.y,
+          duration: 1,
+          onComplete: config.onComplete
+        })
+      },
+      defaults: { x: 0, y: 0, onComplete: ()=>{}},
+      extendTimeline: true,
+    })
+
+    
     const tl = gsap.timeline()
-    tl.from('.slide.start', {
-        autoAlpha: 0,
-        x: -100,
-      })
-      .to('.slide.start', {
-        autoAlpha: 0,
-        x: 50,
-      })
-      .from('.slide.projects', {
-        autoAlpha: 0,
-        x: 100,
-      })
-      .to('.slide.projects', {
-        autoAlpha: 0,
-        x: -50,
-      })
-      .from('.slide.education', {
-        autoAlpha: 0,
-        x: -100,
-      })
-      .to('.slide.education', {
-        autoAlpha: 0,
-        x: 50,
-      })
-      .from('.slide.contacts', {
-        autoAlpha: 0,
-        x: 100,
-      })
-      .to('.slide.contacts', {
-        autoAlpha: 0,
-        x: -50,
-      })
+    tl.fadeIn('.slide.start', { x: -100})
+      .fadeOut('.slide.start', { x: 100 })
+      tl.addLabel('projects')
+      .fadeIn('.slide.projects', { x: 100})
+      .fadeOut('.slide.projects', { x: -100 })
+      tl.addLabel('education')
+      .fadeIn('.slide.education', { x: -100})
+      .fadeOut('.slide.education', { x: 100 })
+      tl.addLabel('contacts')
+      .fadeIn('.slide.contacts', { x: 100, onComplete: ()=> {this.endPage=true}})
+      .fadeOut('.slide.contacts', { x: -100 })
 
     ScrollTrigger.create({
       animation: tl,
       trigger: '.nav',
       scrub: 2,
       start: 'center center',
-      end:'+=6000',
+      end:'+=9000',
       pin: true,
       pinSpacing: true
     })
 
-    gsap.fromTo(['.title','.avatar'], {
-      autoAlpha: 0,
-    }, {
-      autoAlpha: 1,
-      duration: 2,
+    gsap.effects.fadeIn(['.title','.avatar'], {
       stagger: 0.5,
       onComplete: () => {this.arrowsAnimation()},
     })

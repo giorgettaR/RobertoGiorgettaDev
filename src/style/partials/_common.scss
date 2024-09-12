@@ -1,7 +1,7 @@
 @use './variables' as *;
 
 :root {
-    // overflow: hidden;
+    overflow-x: hidden;
 }
 
 * {
@@ -13,6 +13,11 @@
     font-optical-sizing: auto;
     font-weight: 300;
     font-style: normal;
+}
+
+html a {
+    text-decoration: none;
+    color: inherit;
 }
 
 button {
