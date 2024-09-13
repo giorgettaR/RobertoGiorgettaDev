@@ -4,17 +4,28 @@
 
   <div class="container home" >
     <div class="hero">
-      <div class="title">
-        <h1 class="">
+      <div class="title welcome">
+        <span class="">
           {{ data.language == 'Italian' ? 'BENVENUTO' : 'WELCOME'}} 
           <font-awesome-icon :icon="['far', 'face-grin-beam']" />
-        </h1>
+        </span>
       </div>
-      <div class="title">
-        <h1 class="">{{ data.language == 'Italian' ? 'sono ROBERTO' : `I'm ROBERTO`}}</h1>
+      <div class="title person">
+        <div class="verb">
+          <span>{{ data.language == 'Italian' ? 'sono ' : `I'm `}}</span>
+        </div>
+        <div class="name">
+          <div class="letter r1"><span class="shadow">R</span><span id="r1">R</span></div>
+          <div class="letter o1"><span class="shadow">O</span><span id="o1">O</span></div>
+          <div class="letter b"><span class="shadow">B</span><span id="b">B</span></div>
+          <div class="letter e"><span class="shadow">E</span><span id="e">E</span></div>
+          <div class="letter r2"><span class="shadow">R</span><span id="r2">R</span></div>
+          <div class="letter t"><span class="shadow">T</span><span id="t">T</span></div>
+          <div class="letter o2"><span class="shadow">O</span><span id="o2">O</span></div>
+        </div>
       </div>
-      <div class="title">
-        <h1 class="">{{ data.language == 'Italian' ? 'un Jr Web Developer' : 'a Jr Web Developer'}}</h1>
+      <div class="title profession">
+        <span class="">{{ data.language == 'Italian' ? 'un Jr Web Developer' : 'a Jr Web Developer'}}</span>
       </div>
       <div class="avatar">
         <img src="/img/avatar-home.jpg" alt="">
@@ -64,6 +75,7 @@
 
 
 <script>
+import { width } from '@fortawesome/free-brands-svg-icons/fa42Group';
 import Navbar from '../components/Navbar.vue';
 import { data } from '../data.js';
 import { gsap } from 'gsap';
@@ -86,11 +98,8 @@ export default {
 
   },
   methods: {
-    // ANIMAZIONE FRECCE
     arrowsAnimation(){
-      const tl = gsap.timeline({
-        repeat: -1,
-      })
+      const tl = gsap.timeline({repeat: -1})
       tl.set('.arrows *', {
           autoAlpha: 0,
           y: -100,
@@ -106,68 +115,310 @@ export default {
           stagger: 0.1
         })
     },
+    nameAnimation(){
+      const tl = gsap.timeline({
+        repeat: -1,
+        onComplete: () => {this.underlineName()}
+      })
+      tl.addLabel('start')
+        .to(['#r1','#e','#t'],{
+          scale: 1.2,
+          stagger: 0.2
+        },'start')
+        .to(['#o1','#r2'],{
+          scale: 0.8,
+          stagger: 0.2
+        },'start')
+        // step2
+        .addLabel('step2')
+        .to(['#r1','#e','#t'],{
+          scale: 0.8,
+          stagger: 0.2
+        },'step2')
+        .to(['#o1','#r2'],{
+          scale: 1.3,
+          stagger: 0.2
+        },'step2')
+        .to(['#b','#o2'],{
+          scale: 0.7,
+          stagger: 0.2
+        },'step2')
+        // end
+        .addLabel('end')
+        .to(['#r1','#e','#t'],{
+          scale: 1,
+          stagger: 0.2
+        },'end')
+        .to(['#o1','#r2'],{
+          scale: 1,
+          stagger: 0.2
+        },'end')
+        .to(['#b','#o2'],{
+          scale: 1,
+          stagger: 0.2
+        },'end')
+        .to('.letter *', {
+          textDecoration: 'underline',
+          stagger:0.1,
+          duration: 0.5
+        })
+        .to('.letter *', {
+          textDecoration: 'none',
+          stagger:0.1,
+          duration: 0.5
+        }, '-=1' )
+    },
 
   },
   mounted() {
+    // SETUP
+      // fadeIn effect
+      gsap.registerEffect({
+        name: 'fadeIn',
+        effect: (targets, config) => {
+          return gsap.from(targets, {
+            autoAlpha: 0,
+            x: config.x,
+            y: config.y,
+            duration: config.duration,
+            stagger: config.stagger,
+            onComplete: config.onComplete
+          })
+        },
+        defaults: { x: 0, y: 0, stagger: 1, duration: 1, onComplete: ()=>{}},
+        extendTimeline: true,
+      })
+      // fadeOut effect
+      gsap.registerEffect({
+        name: 'fadeOut',
+        effect: (targets, config) => {
+          return gsap.to(targets, {
+            autoAlpha: 0,
+            x: config.x,
+            y: config.y,
+            duration: 1,
+            onComplete: config.onComplete
+          })
+        },
+        defaults: { x: 0, y: 0, onComplete: ()=>{}},
+        extendTimeline: true,
+      })
+      // 
+      const scrollNav = gsap.timeline()
+      scrollNav
+        .fadeIn('.slide.start', { x: -100})
+        .fadeOut('.slide.start', { x: 100 })
+        .addLabel('projects')
+        .fadeIn('.slide.projects', { x: 100})
+        .fadeOut('.slide.projects', { x: -100 })
+        .addLabel('education')
+        .fadeIn('.slide.education', { x: -100})
+        .fadeOut('.slide.education', { x: 100 })
+        .addLabel('contacts')
+        .fadeIn('.slide.contacts', { x: 100, onComplete: ()=> {this.endPage=true}})
+        .fadeOut('.slide.contacts', { x: -100 })
 
-    gsap.registerEffect({
-      name: 'fadeIn',
-      effect: (targets, config) => {
-        return gsap.from(targets, {
-          autoAlpha: 0,
-          x: config.x,
-          y: config.y,
-          duration: config.duration,
-          stagger: config.stagger,
-          onComplete: config.onComplete
-        })
-      },
-      defaults: { x: 0, y: 0, stagger: 1, duration: 1, onComplete: ()=>{}},
-      extendTimeline: true,
-    })
+      ScrollTrigger.create({
+        animation: scrollNav,
+        trigger: '.nav',
+        scrub: 2,
+        start: 'center center',
+        end:'+=9000',
+        pin: true,
+        pinSpacing: true
+      })
 
-    gsap.registerEffect({
-      name: 'fadeOut',
-      effect: (targets, config) => {
-        return gsap.to(targets, {
+    const welcome = gsap.matchMedia()
+
+    // MOBILE
+    welcome.add("(max-width: 768px)",() => {
+      const welcomeAnimation = gsap.timeline()
+      welcomeAnimation
+        .fadeIn('.title.welcome', { y:-100, duration: 1.5})
+        .fadeIn('.title.person .verb', { x:-100, duration: 1.5})
+        // step1
+        .addLabel('start')
+        .from('#r1', { 
+          left: -60,
+          duration: 2,
+          ease: "bounce.out",
+        }, 'start')
+        .fromTo(['#b', '#r2'], {
+          top: -60,
+        },{ 
+          top: 60,
+          duration: 0.5,
+          stagger: 0.5
+        }, 'start')
+        .fromTo(['#e', '#t'], {
+          top: 60,
+        },{ 
+          top: -60,
+          duration: 0.5,
+          stagger: 0.5
+        }, 'start')
+        .fromTo('#o1', {
           autoAlpha: 0,
-          x: config.x,
-          y: config.y,
+          top:-75,
+        },{ 
+          autoAlpha: 1,
+          rotate: 720,
+          top: 75,
           duration: 1,
-          onComplete: config.onComplete
+        },'start')
+        .fromTo('#o2',{
+          autoAlpha: 0,
+          top:-75,
+        },{ 
+          autoAlpha: 1,
+          rotate: 720,
+          top: 75,
+          duration: 1,
+        },'start')
+
+        // step 2
+        .addLabel('step2','>')
+        .to(['#b', '#r2'], {
+          top: -60,
+          duration: 0.5,
+          stagger: 0.5
+        }, 'step2')
+        .to(['#e', '#t'], {
+          top: 60,
+          duration: 0.5,
+          stagger: 0.5
+        }, 'step2')
+        .to('#o1', { 
+          rotate: 0,
+          top: -75,
+          duration: 1,
+        },'step2')
+        .to('#o2', { 
+          rotate: 0,
+          top: -75,
+          duration: 1,
+        },'step2')
+
+        // end
+        .addLabel('end')
+        .to(['#b', '#r2','#e', '#t'],{
+          top: 0,
+          stagger: 0.3
+        },'end')
+        .to('#o1', { 
+          rotate: 360,
+          top: 0,
+          duration: 1,
+        },'end')
+        .to('#o2', { 
+          rotate: 360,
+          top: 0,
+          duration: 1,
+          onComplete: () => {this.nameAnimation()},
+        },'end')
+
+        .fadeIn('.title.profession', { x:-100, duration: 1.5})
+        .from('.avatar', {
+          autoAlpha: 0,
+          y: -300,
+          rotate: 720,
+          onComplete: () => {this.arrowsAnimation()},
         })
-      },
-      defaults: { x: 0, y: 0, onComplete: ()=>{}},
-      extendTimeline: true,
     })
+    // DESKTOP
+    welcome.add("(min-width: 768px)",() => {
+      const welcomeAnimation = gsap.timeline()
+      welcomeAnimation
+        .fadeIn('.title.welcome', { y:-100, duration: 1.5})
+        .fadeIn('.title.person .verb', { x:-100, duration: 1.5})
+        // step1
+        .addLabel('start')
+        .from('#r1', { 
+          left: -300,
+          duration: 2,
+          ease: "bounce.out",
+        }, 'start')
+        .fromTo(['#b', '#r2'], {
+          top: -300,
+        },{ 
+          top: 300,
+          duration: 0.5,
+          stagger: 0.5
+        }, 'start')
+        .fromTo(['#e', '#t'], {
+          top: 300,
+        },{ 
+          top: -300,
+          duration: 0.5,
+          stagger: 0.5
+        }, 'start')
+        .fromTo('#o1', {
+          autoAlpha: 0,
+          top:-250,
+        },{ 
+          autoAlpha: 1,
+          rotate: 720,
+          top: 250,
+          duration: 1,
+        },'start')
+        .fromTo('#o2',{
+          autoAlpha: 0,
+          top:-250,
+        },{ 
+          autoAlpha: 1,
+          rotate: 720,
+          top: 250,
+          duration: 1,
+        },'start')
 
-    
-    const tl = gsap.timeline()
-    tl.fadeIn('.slide.start', { x: -100})
-      .fadeOut('.slide.start', { x: 100 })
-      tl.addLabel('projects')
-      .fadeIn('.slide.projects', { x: 100})
-      .fadeOut('.slide.projects', { x: -100 })
-      tl.addLabel('education')
-      .fadeIn('.slide.education', { x: -100})
-      .fadeOut('.slide.education', { x: 100 })
-      tl.addLabel('contacts')
-      .fadeIn('.slide.contacts', { x: 100, onComplete: ()=> {this.endPage=true}})
-      .fadeOut('.slide.contacts', { x: -100 })
+        // step 2
+        .addLabel('step2','>')
+        .to(['#b', '#r2'], {
+          top: -300,
+          duration: 0.5,
+          stagger: 0.5
+        }, 'step2')
+        .to(['#e', '#t'], {
+          top: 300,
+          duration: 0.5,
+          stagger: 0.5
+        }, 'step2')
+        .to('#o1', { 
+          rotate: 0,
+          top: -250,
+          duration: 1,
+        },'step2')
+        .to('#o2', { 
+          rotate: 0,
+          top: -250,
+          duration: 1,
+        },'step2')
 
-    ScrollTrigger.create({
-      animation: tl,
-      trigger: '.nav',
-      scrub: 2,
-      start: 'center center',
-      end:'+=9000',
-      pin: true,
-      pinSpacing: true
-    })
+        // end
+        .addLabel('end')
+        .to(['#b', '#r2','#e', '#t'],{
+          top: 0,
+          stagger: 0.3
+        },'end')
+        .to('#o1', { 
+          rotate: 360,
+          top: 0,
+          duration: 1,
+        },'end')
+        .to('#o2', { 
+          rotate: 360,
+          top: 0,
+          duration: 1,
+          onComplete: () => {this.nameAnimation()},
+        },'end')
 
-    gsap.effects.fadeIn(['.title','.avatar'], {
-      stagger: 0.5,
-      onComplete: () => {this.arrowsAnimation()},
+        .fadeIn('.title.profession', { x:-100, duration: 1.5})
+        .from('.avatar', {
+          autoAlpha: 0,
+          y: -300,
+          rotate: 720,
+          onComplete: () => {this.arrowsAnimation()},
+        })
     })
   }
 }
